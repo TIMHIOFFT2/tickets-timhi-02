@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket de Entrada - ParKinG</title>
+    <style>
+        /* Estilos CSS para impresión */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #000;
+            background: none;
+        }
+
+        .ticket {
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+            padding: 5px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 24px;
+            margin: 0;
+            font-weight: bold;
+        }
+
+        header h2 {
+            font-size: 20px;
+            margin: 3px 0;
+        }
+
+        .details {
+            font-size: 16px;
+            text-align: left;
+            margin-top: 5px;
+        }
+
+        .details p {
+            margin: 3px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .details strong {
+            font-weight: bold;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: #000;
+            margin: 3px 0;
+        }
+
+        .footer {
+            margin-top: 5px;
+            font-size: 12px;
+            color: #141414;
+        }
+
+        /* Estilo para centrar el ID */
+        .id-container {
+            text-align: center;
+            margin: 3px 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Ocultar elementos no deseados en impresión */
+        @media print {
+            body {
+                background: none;
+            }
+            .ticket {
+                box-shadow: none;
+                border: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Estructura del ticket -->
+    <div class="ticket">
+        <header>
+            <h1>ParKinG</h1>
+            <h2>Ticket de Entrada</h2>
+        </header>
+        <!-- ID centrado -->
+        <div class="id-container">
+            <strong>ID:</strong> <span id="idAuto">-</span>
+        </div>
+        <div class="details">
+            <p><strong>Hora de Entrada:</strong> <span id="horaEntrada">-</span></p>
+            <hr>
+            <p><strong>PLACA:</strong> <span id="placa">-</span></p>
+            <p><strong>CARNET:</strong> <span id="carnet">-</span></p>
+            <hr>
+            <p><strong>Tarifa por Hora:</strong> <span id="tarifaHora">-</span></p>
+            <p><strong>Tarifa por Fracción:</strong> <span id="tarifaFraccion">-</span></p>
+        </div>
+        <div class="footer">
+            <p>Gracias por su preferencia. ¡Conserve este Ticket!</p>
+        </div>
+    </div>
+
+    <!-- Script para obtener parámetros de la URL -->
+    <script>
+        // Función para obtener los parámetros de la URL
+        function getParameterByName(name, url = window.location.href) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            let regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        // Asignar los valores de la URL a los elementos del ticket
+        document.getElementById('idAuto').textContent = getParameterByName('idAuto') || '-';
+        document.getElementById('horaEntrada').textContent = getParameterByName('horaEntrada') || '-';
+        document.getElementById('placa').textContent = getParameterByName('placa') || '-';
+        document.getElementById('carnet').textContent = getParameterByName('carnet') || '-';
+        document.getElementById('tarifaHora').textContent = getParameterByName('tarifaHora') || '-';
+        document.getElementById('tarifaFraccion').textContent = getParameterByName('tarifaFraccion') || '-';
+
+                // Imprimir automáticamente
+                window.onload = function() {
+            setTimeout(function() {
+                window.print();
+            }, 500);
+        }
+    </script>
+</body>
+</html>
